@@ -1,0 +1,198 @@
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 7184bd9..3b7401f 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -169,27 +169,7 @@[m
+ [m
+       <!-- Spring Boot Actuator displays build-related information if a git.properties[m
+         file is present at the classpath -->[m
+[31m-      <plugin>[m
+[31m-        <groupId>pl.project13.maven</groupId>[m
+[31m-        <artifactId>git-commit-id-plugin</artifactId>[m
+[31m-        <executions>[m
+[31m-          <execution>[m
+[31m-            <goals>[m
+[31m-              <goal>revision</goal>[m
+[31m-            </goals>[m
+[31m-          </execution>[m
+[31m-        </executions>[m
+[31m-        <configuration>[m
+[31m-            <dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>[m
+[31m-[m
+[31m-            <verbose>true</verbose>[m
+[31m-          <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>[m
+[31m-          <generateGitPropertiesFile>true</generateGitPropertiesFile>[m
+[31m-          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties[m
+[31m-          </generateGitPropertiesFilename>[m
+[31m-          <failOnNoGitDirectory>false</failOnNoGitDirectory>[m
+[31m-        </configuration>[m
+[31m-      </plugin>[m
+[32m+[m
+ [m
+       <plugin>[m
+         <groupId>ro.isdc.wro4j</groupId>[m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/owner/Pet.java b/src/main/java/org/springframework/samples/petclinic/owner/Pet.java[m
+[1mindex 5e226a1..7464796 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/owner/Pet.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/owner/Pet.java[m
+[36m@@ -105,7 +105,7 @@[m [mpublic class Pet extends NamedEntity {[m
+     public List<Visit> getVisits() {[m
+         List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());[m
+         PropertyComparator.sort(sortedVisits,[m
+[31m-                new MutableSortDefinition("date", false, false));[m
+[32m+[m[32m            new MutableSortDefinition("date", false, false));[m
+         return Collections.unmodifiableList(sortedVisits);[m
+     }[m
+ [m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/owner/PetController.java b/src/main/java/org/springframework/samples/petclinic/owner/PetController.java[m
+[1mindex f364a57..d284030 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/owner/PetController.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/owner/PetController.java[m
+[36m@@ -82,7 +82,7 @@[m [mclass PetController {[m
+ [m
+     @PostMapping("/pets/new")[m
+     public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {[m
+[31m-        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null){[m
+[32m+[m[32m        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {[m
+             result.rejectValue("name", "duplicate", "already exists");[m
+         }[m
+         owner.addPet(pet);[m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/rewrite/SchoolConfig.java b/src/main/java/org/springframework/samples/petclinic/rewrite/SchoolConfig.java[m
+[1mindex 34eb156..b87bc76 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/rewrite/SchoolConfig.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/rewrite/SchoolConfig.java[m
+[36m@@ -6,30 +6,30 @@[m [mimport org.springframework.context.annotation.Configuration;[m
+ [m
+ @Configuration[m
+ public class SchoolConfig {[m
+[31m-        /** Purposely misaligned to cause auto-formatting.[m
+[31m-         * {@link}[m
+[31m-         * {@link DogSchool[m
+[32m+[m[32m    /** Purposely misaligned to cause auto-formatting.[m
+[32m+[m[32m     * {@link}[m
+[32m+[m[32m     * {@link DogSchool[m
+          * {@link DogSchool()}[m
+          * {@link[m
+          *      DogSchool}[m
+[31m-         */[m
+[32m+[m[32m     */[m
+     @Bean[m
+     public DogSchool dogSchool() {[m
+         return new DogSchool();[m
+     }[m
+ [m
+[31m-        /**[m
+[31m-         * <a href="[m
+[32m+[m[32m    /**[m
+[32m+[m[32m     * <a href="[m
+          * https://...html">[m
+[31m-         * label</a>.[m
+[31m-         */[m
+[32m+[m[32m     * label</a>.[m
+[32m+[m[32m     */[m
+     @Bean[m
+     public CatSchool catSchool() {[m
+         return new CatSchool();[m
+     }[m
+ [m
+[31m-        /**[m
+[31m-         */[m
+[32m+[m[32m    /**[m
+[32m+[m[32m     */[m
+     @Bean[m
+     @ConditionalOnBean({CatSchool.class, DogSchool.class})[m
+     public VetSchool vetSchool() {[m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/rewrite/VetSchool.java b/src/main/java/org/springframework/samples/petclinic/rewrite/VetSchool.java[m
+[1mindex 02bdf31..dd42422 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/rewrite/VetSchool.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/rewrite/VetSchool.java[m
+[36m@@ -1,7 +1,7 @@[m
+ package org.springframework.samples.petclinic.rewrite;[m
+ [m
+ public class VetSchool {[m
+[31m-    public String getName(){[m
+[32m+[m[32m    public String getName() {[m
+         return "VetSchool";[m
+     }[m
+ }[m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/system/CrashController.java b/src/main/java/org/springframework/samples/petclinic/system/CrashController.java[m
+[1mindex 6345686..9bad5e4 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/system/CrashController.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/system/CrashController.java[m
+[36m@@ -31,7 +31,7 @@[m [mclass CrashController {[m
+     @GetMapping("/oups")[m
+     public String triggerException() {[m
+         throw new RuntimeException([m
+[31m-                "Expected: controller used to showcase what " + "happens when an exception is thrown");[m
+[32m+[m[32m            "Expected: controller used to showcase what " + "happens when an exception is thrown");[m
+     }[m
+ [m
+ }[m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/vet/Vet.java b/src/main/java/org/springframework/samples/petclinic/vet/Vet.java[m
+[1mindex 43aecc4..b406514 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/vet/Vet.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/vet/Vet.java[m
+[36m@@ -64,7 +64,7 @@[m [mpublic class Vet extends Person {[m
+     public List<Specialty> getSpecialties() {[m
+         List<Specialty> sortedSpecs = new ArrayList<>(getSpecialtiesInternal());[m
+         PropertyComparator.sort(sortedSpecs,[m
+[31m-                new MutableSortDefinition("name", true, true));[m
+[32m+[m[32m            new MutableSortDefinition("name", true, true));[m
+         return Collections.unmodifiableList(sortedSpecs);[m
+     }[m
+ [m
+[1mdiff --git a/src/main/java/org/springframework/samples/petclinic/vet/VetController.java b/src/main/java/org/springframework/samples/petclinic/vet/VetController.java[m
+[1mindex 7ce8374..f1d5d1b 100644[m
+[1m--- a/src/main/java/org/springframework/samples/petclinic/vet/VetController.java[m
+[1m+++ b/src/main/java/org/springframework/samples/petclinic/vet/VetController.java[m
+[36m@@ -48,7 +48,7 @@[m [mclass VetController {[m
+         return "vets/vetList";[m
+     }[m
+ [m
+[31m-    @GetMapping({ "/vets.json", "/vets.xml" })[m
+[32m+[m[32m    @GetMapping({"/vets.json", "/vets.xml"})[m
+     public @ResponseBody Vets showResourcesVetList() {[m
+         // Here we are returning an object of type 'Vets' rather than a collection of Vet[m
+         // objects so it is simpler for JSon/Object mapping[m
+[1mdiff --git a/src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java b/src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java[m
+[1mindex a2027a8..8a90613 100644[m
+[1m--- a/src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java[m
+[1m+++ b/src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java[m
+[36m@@ -26,8 +26,8 @@[m [mimport static org.springframework.test.web.servlet.result.MockMvcResultMatchers.[m
+ @RunWith(SpringRunner.class)[m
+ @WebMvcTest(value = PetController.class,[m
+     includeFilters = @ComponentScan.Filter([m
+[31m-                            value = PetTypeFormatter.class,[m
+[31m-                            type = FilterType.ASSIGNABLE_TYPE))[m
+[32m+[m[32m        value = PetTypeFormatter.class,[m
+[32m+[m[32m        type = FilterType.ASSIGNABLE_TYPE))[m
+ public class PetControllerTests {[m
+ [m
+     private static final int TEST_OWNER_ID = 1;[m
+[1mdiff --git a/src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java b/src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java[m
+[1mindex 3f108bf..415d959 100644[m
+[1m--- a/src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java[m
+[1m+++ b/src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java[m
+[36m@@ -32,7 +32,7 @@[m [mpublic class CrashControllerTests {[m
+     @Test[m
+     public void testTriggerException() throws Exception {[m
+         mockMvc.perform(get("/oups")).andExpect(view().name("exception"))[m
+[31m-                .andExpect(model().attributeExists("exception"))[m
+[31m-                .andExpect(forwardedUrl("exception")).andExpect(status().isOk());[m
+[32m+[m[32m            .andExpect(model().attributeExists("exception"))[m
+[32m+[m[32m            .andExpect(forwardedUrl("exception")).andExpect(status().isOk());[m
+     }[m
+ }[m
+[1mdiff --git a/src/test/java/org/springframework/samples/petclinic/vet/VetTests.java b/src/test/java/org/springframework/samples/petclinic/vet/VetTests.java[m
+[1mindex de92492..9ccf7ac 100644[m
+[1m--- a/src/test/java/org/springframework/samples/petclinic/vet/VetTests.java[m
+[1m+++ b/src/test/java/org/springframework/samples/petclinic/vet/VetTests.java[m
+[36m@@ -33,7 +33,7 @@[m [mpublic class VetTests {[m
+         vet.setLastName("Beeblebrox");[m
+         vet.setId(123);[m
+         Vet other = (Vet) SerializationUtils[m
+[31m-                .deserialize(SerializationUtils.serialize(vet));[m
+[32m+[m[32m            .deserialize(SerializationUtils.serialize(vet));[m
+         assertEquals(vet.getFirstName(), other.getFirstName());[m
+         assertEquals(vet.getLastName(), other.getLastName());[m
+         assertEquals(vet.getId(), other.getId());[m
