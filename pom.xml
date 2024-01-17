@@ -132,6 +132,7 @@
 
   <build>
     <plugins>
+
 <plugin>
   <groupId>org.openrewrite.maven</groupId>
   <artifactId>rewrite-maven-plugin</artifactId>
@@ -189,7 +190,7 @@
           <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
           <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
           <contextFolder>${basedir}/src/main/less</contextFolder>
-        </configuration>
+        </configuration>git
         <dependencies>
           <dependency>
             <groupId>org.webjars</groupId>
@@ -198,11 +199,14 @@
           </dependency>
         </dependencies>
       </plugin>
+
     </plugins>
+
   </build>
   <reporting>
     <plugins>
       <!-- integrate maven-cobertura-plugin to project site -->
+
         <plugin>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
@@ -218,6 +222,7 @@
                 </activeRecipes>
             </configuration>
         </plugin>
+
     </plugins>
 
   </reporting>
