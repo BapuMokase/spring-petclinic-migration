@@ -5,7 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+//import org.mockito.runners.MockitoJUnitRunner;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertEquals;
  * Test class for {@link PetTypeFormatter}
  *
  * @author Colin But
+ * (MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PetTypeFormatterTests {
